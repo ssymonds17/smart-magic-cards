@@ -16,11 +16,11 @@ function createCards() {
 
   // For each dataObject, create a new card and append it to the DOM
   cards.forEach((card, i) => {
-    const positionFromLeft = i * 22.7;
+    const positionFromLeft = i * 22;
     const cardElement = document.createElement('div');
     cardElement.setAttribute('data-value', card.value);
+    cardElement.setAttribute('id', `${card.suit}-${card.value}`);
     cardElement.setAttribute('draggable', 'true');
-    cardElement.setAttribute('id', 'card');
     cardElement.setAttribute('ondragstart', 'onDragStart(event);');
     cardElement.classList.add('card', `${card.suit}-${card.value}`);
     cardElement.style.left = `${positionFromLeft}px`;
@@ -33,7 +33,6 @@ function createButtons() {
   document.getElementById('start-game').style.display = 'none';
   document.getElementById('shuffle').style.display = 'block';
   document.getElementById('show-hide').style.display = 'block';
-  // document.getElementById('magic').style.display = 'block';
 }
 
 // Function to start the game by clearing the wrapper, creating
@@ -62,11 +61,11 @@ function shuffleCards() {
 
   // For each dataObject, create a new card and append it to the DOM
   cards.forEach((card, i) => {
-    const positionFromLeft = i * 22.7;
+    const positionFromLeft = i * 22;
     const cardElement = document.createElement('div');
     cardElement.setAttribute('data-value', card.value);
+    cardElement.setAttribute('id', `${card.suit}-${card.value}`);
     cardElement.setAttribute('draggable', 'true');
-    cardElement.setAttribute('id', 'card');
     cardElement.setAttribute('ondragstart', 'onDragStart(event);');
     cardElement.classList.add('card', `${card.suit}-${card.value}`);
     cardElement.style.left = `${positionFromLeft}px`;
@@ -91,11 +90,13 @@ function onDragOver(event) {
 }
 
 function onDrop(event) {
+  console.log(event);
   const id = event
     .dataTransfer
     .getData('text');
 
   const draggableElement = document.getElementById(id);
+  draggableElement.style.left = 0;
 
   const dropzone = event.target;
   dropzone.appendChild(draggableElement);
@@ -105,6 +106,7 @@ function onDrop(event) {
     .clearData();
 
   document.getElementById('magic').style.display = 'block';
+  document.getElementById('shuffle').style.display = 'none';
 }
 
 document.getElementById('start-game').addEventListener('click', startGame);
