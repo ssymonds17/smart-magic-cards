@@ -16,7 +16,7 @@ function createCards() {
 
   // For each dataObject, create a new card and append it to the DOM
   cards.forEach((card, i) => {
-    const positionFromLeft = i * 22;
+    const positionFromLeft = i * 33;
     const cardElement = document.createElement('div');
     cardElement.setAttribute('data-value', card.value);
     cardElement.setAttribute('id', `${card.suit}-${card.value}`);
@@ -61,7 +61,7 @@ function shuffleCards() {
 
   // For each dataObject, create a new card and append it to the DOM
   cards.forEach((card, i) => {
-    const positionFromLeft = i * 22;
+    const positionFromLeft = i * 33;
     const cardElement = document.createElement('div');
     cardElement.setAttribute('data-value', card.value);
     cardElement.setAttribute('id', `${card.suit}-${card.value}`);
