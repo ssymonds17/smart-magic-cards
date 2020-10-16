@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
   <script src="js/index.js" defer></script>
   <title>Smart Magic Cards</title>
 </head>
+
 <body class="bg-primary">
   <nav class="navbar navbar-dark bg-primary border-1 border-bottom border-light">
     <a class="navbar-brand ml-5" href="https://www.smartpension.co.uk" target="_blank" rel="noopener noreferrer">
@@ -22,19 +24,25 @@
     He will show us all of the cards and we will see that they are ordered and sorted by suit.<br>
     We are asked to shuffle the deck.<br>
     Then the magician askes to pick a single card.<br>
-    When the magician reveals the deck of cards once more, the picked card is removed as well as all the related valued cards.<br>
+    When the magician reveals the deck of cards once more, the picked card is removed as well as all the related valued
+    cards.<br>
     Eg. the 8 of hears it picked, now all the 8's are removed from the deck.
- <br>
+    <br>
   </p>
   <div class="game-container">
-    <div class="d-flex justify-content-center mb-5 btn-wrapper">
+    <div id="btn-container" class="d-flex justify-content-center mb-5 btn-wrapper">
       <button type="button" id="start-game" class="btn btn-lg btn-secondary">Let's get started</button>
+      <button type="button" id="shuffle" class="btn btn-lg btn-secondary btn-game">Shuffle</button>
+      <button type="button" id="show-hide" class="btn btn-lg btn-secondary btn-game">Show/Hide</button>
+      <button type="button" id="magic" class="btn btn-lg btn-secondary btn-game">Magic</button>
     </div>
-    <div class="cards-wrapper mx-4 position-relative text-center">
+    <div id="cards-wrapper" class="cards-wrapper mx-4 position-relative text-center">
     </div>
     <div class="selected-card-wrapper d-flex justify-content-center pt-4">
-      <div class="selected-cards"></div>
+      <div class="selected-cards" ondragover="onDragOver(event);" ondrop="onDrop(event);"></div>
     </div>
   </div>
+  </div>
 </body>
+
 </html>

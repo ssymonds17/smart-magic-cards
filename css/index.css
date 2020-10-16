@@ -4236,6 +4236,10 @@ fieldset:disabled a.btn {
   box-shadow: 0 0 0 0.2rem rgba(5, 199, 223, 0.5);
 }
 
+.btn-game {
+  display: none;
+}
+
 .btn-success {
   color: #fff;
   background-color: #28a745;
@@ -4635,6 +4639,7 @@ fieldset:disabled a.btn {
 
 .btn-lg, .btn-group-lg > .btn {
   padding: 0.5rem 1rem;
+  margin: 0.2rem;
   font-size: 1.25rem;
   line-height: 1.5;
   border-radius: 0.3rem;
