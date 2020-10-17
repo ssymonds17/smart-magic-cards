@@ -5,18 +5,16 @@ const cards = [];
 const suits = ['hearts', 'clubs', 'diamonds', 'spades'];
 
 function createCards() {
-
   // Create an array with objects containing the value and the suit of each card
   suits.forEach((suit) => {
     for (let i = 1; i <= 13; i += 1) {
-      cardObject = {
+      const cardObject = {
         value: i,
         suit,
       };
       cards.push(cardObject);
-    };
+    }
   });
-
 
   // For each dataObject, create a new card and append it to the DOM
   cards.forEach((card, i) => {
@@ -47,13 +45,12 @@ function startGame() {
 }
 
 function shuffleCards() {
-
   for (let i = cards.length - 1; i > 0; i -= 1) {
     const j = Math.floor(Math.random() * (i + 1));
     [cards[i], cards[j]] = [cards[j], cards[i]];
-  };
+  }
 
-  document.getElementById('cards-wrapper').innerHTML = "";
+  document.getElementById('cards-wrapper').innerHTML = '';
 
   // For each dataObject, create a new card and append it to the DOM
   cards.forEach((card, i) => {
