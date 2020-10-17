@@ -1,18 +1,22 @@
 const cardsWrapper = document.querySelector('.cards-wrapper');
 const btnWrapper = document.querySelector('.btn-wrapper'); /* eslint-disable-line */
 const selectedCardsWrapper = document.querySelector('.selected-cards'); /* eslint-disable-line */
+const cards = [];
+const suits = ['hearts', 'clubs', 'diamonds', 'spades'];
 
 function createCards() {
-  this.values = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13'];
-  this.suits = ['hearts', 'clubs', 'diamonds', 'spades'];
-  const cards = [];
+
   // Create an array with objects containing the value and the suit of each card
-  for (let i = 0; i < suits.length; i++) {
-    for (let x = 0; x < values.length; x++) {
-      let cardObject = { value: values[x], suit: suits[i] };
+  suits.forEach((suit) => {
+    for (let i = 1; i <= 13; i += 1) {
+      cardObject = {
+        value: i,
+        suit,
+      };
       cards.push(cardObject);
     };
-  };
+  });
+
 
   // For each dataObject, create a new card and append it to the DOM
   cards.forEach((card, i) => {
@@ -43,21 +47,13 @@ function startGame() {
 }
 
 function shuffleCards() {
-  this.values = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13'];
-  this.suits = ['hearts', 'clubs', 'diamonds', 'spades'];
-  const cards = [];
-  // Create an array with objects containing the value and the suit of each card
-  for (let i = 0; i < suits.length; i++) {
-    for (let x = 0; x < values.length; x++) {
-      let cardObject = { value: values[x], suit: suits[i] };
-      cards.push(cardObject);
-    };
-  };
 
-  for (let i = cards.length - 1; i > 0; i--) {
+  for (let i = cards.length - 1; i > 0; i -= 1) {
     const j = Math.floor(Math.random() * (i + 1));
     [cards[i], cards[j]] = [cards[j], cards[i]];
   };
+
+  document.getElementById('cards-wrapper').innerHTML = "";
 
   // For each dataObject, create a new card and append it to the DOM
   cards.forEach((card, i) => {
@@ -90,7 +86,6 @@ function onDragOver(event) {
 }
 
 function onDrop(event) {
-  console.log(event);
   const id = event
     .dataTransfer
     .getData('text');
