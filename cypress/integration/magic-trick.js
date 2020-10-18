@@ -51,17 +51,17 @@ describe('Play game', () => {
     cy.get('.selected-card-wrapper .card').should('not.exist');
     cy.contains('Magic').should('not.exist');
 
-    // /* Click on the first card */
-    // cy.get('.card').then((cards) => {
-    //   [selectedCard] = cards;
-    //   cards[0].click();
-    // });
+    /* Click on the first card */
+    cy.get('.card').then((cards) => {
+      [selectedCard] = cards;
+      cards[0].click();
+    });
 
-    // /* The selected card moved to the `selected-card-wrapper` */
-    // cy.get('.selected-card-wrapper .card').then((cards) => {
-    //   expect(cards).to.have.length(1);
-    //   expect(cards[0]).to.equal(selectedCard);
-    // });
+    /* The selected card moved to the `selected-cards` */
+    cy.get('.selected-cards .card').then((cards) => {
+      expect(cards).to.have.length(1);
+      expect(cards[0]).to.equal(selectedCard);
+    });
 
     /* Click on the `Magic` button */
     cy.contains('Magic').click();

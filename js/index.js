@@ -23,6 +23,7 @@ function createCards() {
     cardElement.setAttribute('data-value', card.value);
     cardElement.setAttribute('id', `${card.suit}-${card.value}`);
     cardElement.setAttribute('draggable', 'true');
+    cardElement.setAttribute('onclick', `onClick('${card.suit}-${card.value}')`);
     cardElement.classList.add('card', `${card.suit}-${card.value}`);
     cardElement.style.left = `${positionFromLeft}px`;
     cardsWrapper.append(cardElement);
@@ -58,6 +59,7 @@ function shuffleCards() {
     cardElement.setAttribute('data-value', card.value);
     cardElement.setAttribute('id', `${card.suit}-${card.value}`);
     cardElement.setAttribute('draggable', 'true');
+    cardElement.setAttribute('onclick', `onClick('${card.suit}-${card.value}')`);
     cardElement.classList.add('card', `${card.suit}-${card.value}`);
     cardElement.style.left = `${positionFromLeft}px`;
     cardsWrapper.append(cardElement);
@@ -67,6 +69,18 @@ function shuffleCards() {
 function flipCardsToggle() {
   const cardWrapper = document.getElementById('cards-wrapper');
   cardWrapper.classList.toggle('hidden');
+}
+
+function onClick(id) {
+  const clickableElement = document.querySelector(`#${id}`);
+  clickableElement.style.left = 0;
+  const dropzone = document.querySelector(('#selected-cards'));
+  dropzone.appendChild(clickableElement);
+
+  const magicButtonElement = document.createElement('button');
+  magicButtonElement.innerHTML = 'Magic';
+  magicButtonElement.classList.add('btn', 'btn-lg', 'btn-secondary');
+  btnWrapper.append(magicButtonElement);
 }
 
 // Dragging functions -------------------------------------
@@ -99,15 +113,15 @@ function onDrop(event) {
   magicButtonElement.innerHTML = 'Magic';
   magicButtonElement.classList.add('btn', 'btn-lg', 'btn-secondary');
   btnWrapper.append(magicButtonElement);
-
-  document.getElementById('shuffle').style.display = 'none';
 }
 
 document.getElementById('start-game').addEventListener('click', startGame);
 document.getElementById('shuffle').addEventListener('click', shuffleCards);
 document.getElementById('flip').addEventListener('click', flipCardsToggle);
 
-// Event listener that fire when target is dragged
+// Event listener that fires when target is clicked
+document.addEventListener('onclick', onClick);
+// Event listener that fires when target is dragged
 document.addEventListener('dragstart', onDragStart);
 // Event listeners that fire target is dropped
 document.addEventListener('dragover', onDragOver);
