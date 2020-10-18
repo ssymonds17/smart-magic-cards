@@ -2,7 +2,7 @@ const cardsWrapper = document.querySelector('.cards-wrapper');
 const btnWrapper = document.querySelector('.btn-wrapper'); /* eslint-disable-line */
 const selectedCardsWrapper = document.querySelector('.selected-cards'); /* eslint-disable-line */
 const cards = [];
-const suits = ['hearts', 'clubs', 'diamonds', 'spades'];
+const suits = ['hearts', 'spades', 'diamonds', 'clubs'];
 
 function createCards() {
   // Create an array with objects containing the value and the suit of each card
@@ -23,7 +23,6 @@ function createCards() {
     cardElement.setAttribute('data-value', card.value);
     cardElement.setAttribute('id', `${card.suit}-${card.value}`);
     cardElement.setAttribute('draggable', 'true');
-    cardElement.setAttribute('ondragstart', 'onDragStart(event);');
     cardElement.classList.add('card', `${card.suit}-${card.value}`);
     cardElement.style.left = `${positionFromLeft}px`;
     cardsWrapper.append(cardElement);
@@ -32,9 +31,9 @@ function createCards() {
 
 // Function to clear out the initial button and create new buttons to play the game.
 function createButtons() {
-  document.getElementById('start-game').style.display = 'none';
+  document.getElementById('start-game').remove();
   document.getElementById('shuffle').style.display = 'block';
-  document.getElementById('show-hide').style.display = 'block';
+  document.getElementById('flip').style.display = 'block';
 }
 
 // Function to start the game by clearing the wrapper, creating
@@ -59,14 +58,13 @@ function shuffleCards() {
     cardElement.setAttribute('data-value', card.value);
     cardElement.setAttribute('id', `${card.suit}-${card.value}`);
     cardElement.setAttribute('draggable', 'true');
-    cardElement.setAttribute('ondragstart', 'onDragStart(event);');
     cardElement.classList.add('card', `${card.suit}-${card.value}`);
     cardElement.style.left = `${positionFromLeft}px`;
     cardsWrapper.append(cardElement);
   });
 }
 
-function hideCardsToggle() {
+function flipCardsToggle() {
   const cardWrapper = document.getElementById('cards-wrapper');
   cardWrapper.classList.toggle('hidden');
 }
@@ -97,10 +95,20 @@ function onDrop(event) {
     .dataTransfer
     .clearData();
 
-  document.getElementById('magic').style.display = 'block';
+  const magicButtonElement = document.createElement('button');
+  magicButtonElement.innerHTML = 'Magic';
+  magicButtonElement.classList.add('btn', 'btn-lg', 'btn-secondary');
+  btnWrapper.append(magicButtonElement);
+
   document.getElementById('shuffle').style.display = 'none';
 }
 
 document.getElementById('start-game').addEventListener('click', startGame);
 document.getElementById('shuffle').addEventListener('click', shuffleCards);
-document.getElementById('show-hide').addEventListener('click', hideCardsToggle);
+document.getElementById('flip').addEventListener('click', flipCardsToggle);
+
+// Event listener that fire when target is dragged
+document.addEventListener('dragstart', onDragStart);
+// Event listeners that fire target is dropped
+document.addEventListener('dragover', onDragOver);
+document.addEventListener('drop', onDrop);

@@ -33,13 +33,12 @@
     <div id="btn-container" class="d-flex justify-content-center mb-5 btn-wrapper">
       <button type="button" id="start-game" class="btn btn-lg btn-secondary">Let's get started</button>
       <button type="button" id="shuffle" class="btn btn-lg btn-secondary btn-game">Shuffle</button>
-      <button type="button" id="show-hide" class="btn btn-lg btn-secondary btn-game">Show/Hide</button>
-      <button type="button" id="magic" class="btn btn-lg btn-secondary btn-game">Magic</button>
+      <button type="button" id="flip" class="btn btn-lg btn-secondary btn-game">Flip Cards</button>
     </div>
     <div id="cards-wrapper" class="cards-wrapper mx-4 position-relative text-center">
     </div>
     <div class="selected-card-wrapper d-flex justify-content-center pt-4">
-      <div class="selected-cards" ondragover="onDragOver(event);" ondrop="onDrop(event);"></div>
+      <div class="selected-cards" id="selected-cards"></div>
     </div>
   </div>
   </div>
