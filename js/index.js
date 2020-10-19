@@ -108,12 +108,10 @@ function onClick(id) {
   btnWrapper.append(magicButtonElement);
 
   const cardsList = document.querySelectorAll('.card');
-  for (var i = 0; i < cardsList.length; i += 1) {
-    cardsList[i].removeAttribute('draggable');
-  }
-  for (var i = 0; i < cardsList.length; i += 1) {
-    cardsList[i].removeAttribute('onclick');
-  }
+  cardsList.forEach((card) => {
+    card.removeAttribute('draggable');
+    card.removeAttribute('onclick');
+  });
 
   document.getElementById('magic').addEventListener('click', magicTrick);
 }
@@ -152,12 +150,10 @@ function onDrop(event) {
   btnWrapper.append(magicButtonElement);
 
   const cardsList = document.querySelectorAll('.card');
-  for (var i = 0; i < cardsList.length; i += 1) {
-    cardsList[i].removeAttribute('draggable');
-  }
-  for (var i = 0; i < cardsList.length; i += 1) {
-    cardsList[i].removeAttribute('onclick');
-  }
+  cardsList.forEach((card) => {
+    card.removeAttribute('draggable');
+    card.removeAttribute('onclick');
+  });
 
   document.getElementById('magic').addEventListener('click', magicTrick);
 }
