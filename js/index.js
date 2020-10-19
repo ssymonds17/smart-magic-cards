@@ -1,7 +1,7 @@
 const cardsWrapper = document.querySelector('.cards-wrapper');
 const btnWrapper = document.querySelector('.btn-wrapper'); /* eslint-disable-line */
 const selectedCardsWrapper = document.querySelector('.selected-cards'); /* eslint-disable-line */
-const cards = [];
+let cards = [];
 const suits = ['hearts', 'spades', 'diamonds', 'clubs'];
 let selectedCard = {};
 
@@ -11,20 +11,31 @@ function magicTrick() {
   const newDeck = [...cardsWrapper.children];
   const matchingCards = [];
 
-  for (let i = 0; i < newDeck.length; i += 1) {
-    if (newDeck[i].getAttribute('data-value') === selectedValue) {
-      matchingCards.push(newDeck[i]);
-    }
-  }
+  newDeck.forEach((card) => {
+    if (card.getAttribute('data-value') === selectedValue) {
+      matchingCards.push(card);
+    };
+  });
+
+  matchingCards.forEach((card) => {
+    const newPositionFromLeft = (matchingCards.indexOf(card) + 1) * 33
+    card.style.left = `${newPositionFromLeft}px`;
+  });
 
   const dropzone = document.querySelector(('#selected-cards'));
   matchingCards.forEach((card) => {
     dropzone.appendChild(card);
   });
 
-  selectedCardsWrapper.children[1].style.left = '33px';
-  selectedCardsWrapper.children[2].style.left = '66px';
-  selectedCardsWrapper.children[3].style.left = '99px';
+  document.getElementById('shuffle').style.display = 'none';
+  document.getElementById('flip').style.display = 'none';
+  document.getElementById('magic').remove();
+  const playAgainElement = document.createElement('button');
+  playAgainElement.innerHTML = 'Play Again';
+  playAgainElement.setAttribute('id', 'play-again');
+  playAgainElement.classList.add('btn', 'btn-lg', 'btn-secondary');
+  btnWrapper.append(playAgainElement);
+  document.getElementById('play-again').addEventListener('click', playAgain);
 }
 
 function createCards() {
@@ -67,6 +78,18 @@ function startGame() {
   createButtons();
 }
 
+function playAgain() {
+  cardsWrapper.innerHTML = '';
+  selectedCardsWrapper.innerHTML = '';
+  cards = [];
+  createCards();
+  cardsWrapper.classList.remove('hidden');
+  document.getElementById('play-again').remove();
+  document.getElementById('shuffle').style.display = 'block';
+  document.getElementById('flip').style.display = 'block';
+
+}
+
 function shuffleCards() {
   for (let i = cards.length - 1; i > 0; i -= 1) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -106,6 +129,9 @@ function onClick(id) {
   magicButtonElement.setAttribute('id', 'magic');
   magicButtonElement.classList.add('btn', 'btn-lg', 'btn-secondary');
   btnWrapper.append(magicButtonElement);
+
+  document.getElementById('shuffle').style.display = 'none';
+  document.getElementById('flip').style.display = 'none';
 
   const cardsList = document.querySelectorAll('.card');
   cardsList.forEach((card) => {
@@ -148,6 +174,9 @@ function onDrop(event) {
   magicButtonElement.setAttribute('id', 'magic');
   magicButtonElement.classList.add('btn', 'btn-lg', 'btn-secondary');
   btnWrapper.append(magicButtonElement);
+
+  document.getElementById('shuffle').style.display = 'none';
+  document.getElementById('flip').style.display = 'none';
 
   const cardsList = document.querySelectorAll('.card');
   cardsList.forEach((card) => {
