@@ -66,19 +66,19 @@ describe('Play game', () => {
     /* Click on the `Magic` button */
     cy.contains('Magic').click();
 
-    // /* All the related cards have been removed from the deck */
-    // cy.get('.cards-wrapper .card').then((cards) => {
-    //   const allCardValues = [...cards].map((card) => card.getAttribute('data-value'));
-    //   expect(allCardValues).to.have.length(48);
-    //   expect(allCardValues).to.not.include(selectedCard.getAttribute('data-value'));
-    // });
+    /* All the related cards have been removed from the deck */
+    cy.get('.cards-wrapper .card').then((cards) => {
+      const allCardValues = [...cards].map((card) => card.getAttribute('data-value'));
+      expect(allCardValues).to.have.length(48);
+      expect(allCardValues).to.not.include(selectedCard.getAttribute('data-value'));
+    });
 
-    // /* The removed cards are desplayed in the `selected-card-wrapper` */
-    // cy.get('.selected-card-wrapper .card').then((cards) => {
-    //   const allCardValues = [...cards].map((card) => card.getAttribute('data-value'));
-    //   const selectedValue = selectedCard.getAttribute('data-value');
-    //   expect(allCardValues).to.have.length(4);
-    //   expect(allCardValues).to.deep.equal([selectedValue, selectedValue, selectedValue, selectedValue]);
-    // });
+    /* The removed cards are desplayed in the `selected-card-wrapper` */
+    cy.get('.selected-card-wrapper .card').then((cards) => {
+      const allCardValues = [...cards].map((card) => card.getAttribute('data-value'));
+      const selectedValue = selectedCard.getAttribute('data-value');
+      expect(allCardValues).to.have.length(4);
+      expect(allCardValues).to.deep.equal([selectedValue, selectedValue, selectedValue, selectedValue]);
+    });
   });
 });

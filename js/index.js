@@ -3,6 +3,29 @@ const btnWrapper = document.querySelector('.btn-wrapper'); /* eslint-disable-lin
 const selectedCardsWrapper = document.querySelector('.selected-cards'); /* eslint-disable-line */
 const cards = [];
 const suits = ['hearts', 'spades', 'diamonds', 'clubs'];
+let selectedCard = {};
+
+function magicTrick() {
+  //   // Identify 3 cards with same data value as selected card
+  const selectedValue = selectedCard.getAttribute('data-value');
+  const newDeck = [...cardsWrapper.children];
+  const matchingCards = [];
+
+  for (let i = 0; i < newDeck.length; i += 1) {
+    if (newDeck[i].getAttribute('data-value') === selectedValue) {
+      matchingCards.push(newDeck[i]);
+    }
+  }
+
+  const dropzone = document.querySelector(('#selected-cards'));
+  matchingCards.forEach((card) => {
+    dropzone.appendChild(card);
+  });
+
+  selectedCardsWrapper.children[1].style.left = '33px';
+  selectedCardsWrapper.children[2].style.left = '66px';
+  selectedCardsWrapper.children[3].style.left = '99px';
+}
 
 function createCards() {
   // Create an array with objects containing the value and the suit of each card
@@ -76,11 +99,15 @@ function onClick(id) {
   clickableElement.style.left = 0;
   const dropzone = document.querySelector(('#selected-cards'));
   dropzone.appendChild(clickableElement);
+  selectedCard = clickableElement;
 
   const magicButtonElement = document.createElement('button');
   magicButtonElement.innerHTML = 'Magic';
+  magicButtonElement.setAttribute('id', 'magic');
   magicButtonElement.classList.add('btn', 'btn-lg', 'btn-secondary');
   btnWrapper.append(magicButtonElement);
+
+  document.getElementById('magic').addEventListener('click', magicTrick);
 }
 
 // Dragging functions -------------------------------------
@@ -104,6 +131,7 @@ function onDrop(event) {
 
   const dropzone = event.target;
   dropzone.appendChild(draggableElement);
+  selectedCard = draggableElement;
 
   event
     .dataTransfer
@@ -111,8 +139,11 @@ function onDrop(event) {
 
   const magicButtonElement = document.createElement('button');
   magicButtonElement.innerHTML = 'Magic';
+  magicButtonElement.setAttribute('id', 'magic');
   magicButtonElement.classList.add('btn', 'btn-lg', 'btn-secondary');
   btnWrapper.append(magicButtonElement);
+
+  document.getElementById('magic').addEventListener('click', magicTrick);
 }
 
 document.getElementById('start-game').addEventListener('click', startGame);
