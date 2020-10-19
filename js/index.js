@@ -6,7 +6,7 @@ const suits = ['hearts', 'spades', 'diamonds', 'clubs'];
 let selectedCard = {};
 
 function createCards() {
-  // Create an array with objects containing the value and the suit of each card
+  // For each suit create a cardObject 1-13
   suits.forEach((suit) => {
     for (let i = 1; i <= 13; i += 1) {
       const cardObject = {
@@ -19,6 +19,7 @@ function createCards() {
 
   // For each dataObject, create a new card and append it to the DOM
   cards.forEach((card, i) => {
+    // Position must be set to 33 for optimum visibility
     const positionFromLeft = i * 33;
     const cardElement = document.createElement('div');
     cardElement.setAttribute('data-value', card.value);
@@ -39,40 +40,42 @@ function createButtons() {
 }
 
 function playAgain() {
-  cardsWrapper.innerHTML = '';
-  selectedCardsWrapper.innerHTML = '';
-  cards = [];
+  cardsWrapper.innerHTML = ''; // Remove the previous game's deck
+  selectedCardsWrapper.innerHTML = ''; // Remove the previous game's selected cards
+  cards = []; // Reset cards so we do not get duplications
   createCards();
-  cardsWrapper.classList.remove('hidden');
+  cardsWrapper.classList.remove('hidden'); // Ensure that the cards are facing upright
   document.getElementById('play-again').remove();
   document.getElementById('shuffle').style.display = 'block';
   document.getElementById('flip').style.display = 'block';
 }
 
 function magicTrick() {
-  //   // Identify 3 cards with same data value as selected card
+  // Identify the value of the selected card
   const selectedValue = selectedCard.getAttribute('data-value');
-  const newDeck = [...cardsWrapper.children];
+  const newDeck = [...cardsWrapper.children]; // Destructured the element to access its children as an array
   const matchingCards = [];
 
   newDeck.forEach((card) => {
+    // Identify the remaining 3 cards that have the same value as the selected card then push to matchingCards
     if (card.getAttribute('data-value') === selectedValue) {
       matchingCards.push(card);
     }
   });
 
+  // Set the position from the left of the 3 new cards.
   matchingCards.forEach((card) => {
     const newPositionFromLeft = (matchingCards.indexOf(card) + 1) * 33;
     card.style.left = `${newPositionFromLeft}px`;
   });
 
+  // Add the 3 new card elements to the selected-cards element to complete the trick
   const dropzone = document.querySelector(('#selected-cards'));
   matchingCards.forEach((card) => {
     dropzone.appendChild(card);
   });
 
-  document.getElementById('shuffle').style.display = 'none';
-  document.getElementById('flip').style.display = 'none';
+  // Remove Magic button and replace with Play Again button
   document.getElementById('magic').remove();
   const playAgainElement = document.createElement('button');
   playAgainElement.innerHTML = 'Play Again';
@@ -89,6 +92,7 @@ function startGame() {
   createButtons();
 }
 
+// Randomises the cards array, empties the cards wrapper and appends a new set of cards to the DOM
 function shuffleCards() {
   for (let i = cards.length - 1; i > 0; i -= 1) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -116,6 +120,7 @@ function flipCardsToggle() {
   cardWrapper.classList.toggle('hidden');
 }
 
+// Identifies the clicked card by ID and appends to selected-cards
 function onClick(id) {
   const clickableElement = document.querySelector(`#${id}`);
   clickableElement.style.left = 0;
@@ -123,15 +128,18 @@ function onClick(id) {
   dropzone.appendChild(clickableElement);
   selectedCard = clickableElement;
 
+  // Create the Magic button and append to button wrapper
   const magicButtonElement = document.createElement('button');
   magicButtonElement.innerHTML = 'Magic';
   magicButtonElement.setAttribute('id', 'magic');
   magicButtonElement.classList.add('btn', 'btn-lg', 'btn-secondary');
   btnWrapper.append(magicButtonElement);
 
+  // Hide Shuffle and Flip buttons
   document.getElementById('shuffle').style.display = 'none';
   document.getElementById('flip').style.display = 'none';
 
+  // Remove the functionality to click or drag cards after a card has been selected
   const cardsList = document.querySelectorAll('.card');
   cardsList.forEach((card) => {
     card.removeAttribute('draggable');
@@ -140,7 +148,7 @@ function onClick(id) {
   document.getElementById('magic').addEventListener('click', magicTrick);
 }
 
-// Dragging functions -------------------------------------
+// Dragging functions
 function onDragStart(event) {
   event
     .dataTransfer
@@ -184,6 +192,7 @@ function onDrop(event) {
   document.getElementById('magic').addEventListener('click', magicTrick);
 }
 
+// Event listeners for clicks on the buttons rendered on page load
 document.getElementById('start-game').addEventListener('click', startGame);
 document.getElementById('shuffle').addEventListener('click', shuffleCards);
 document.getElementById('flip').addEventListener('click', flipCardsToggle);

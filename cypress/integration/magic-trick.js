@@ -63,6 +63,17 @@ describe('Play game', () => {
       expect(cards[0]).to.equal(selectedCard);
     });
 
+    /* The `Shuffle` and `Flip Cards` buttons should now have css display set to none */
+    cy.get('#shuffle').should('have.css', 'display', 'none');
+    cy.get('#flip').should('have.css', 'display', 'none');
+
+    /* Card elements should not have the attributes draggable or onclick */
+    cy.get('.card').should('not.have.attr', 'draggable');
+    cy.get('.card').should('not.have.attr', 'onclick');
+
+    /* `Play Again` button should not exist */
+    cy.contains('Play Again').should('not.exist');
+
     /* Click on the `Magic` button */
     cy.contains('Magic').click();
 
@@ -80,5 +91,30 @@ describe('Play game', () => {
       expect(allCardValues).to.have.length(4);
       expect(allCardValues).to.deep.equal([selectedValue, selectedValue, selectedValue, selectedValue]);
     });
+
+    /* `Play Again` button should exist */
+    cy.contains('Play Again').should('exist');
+
+    /* Click the `Play Again` button */
+    cy.contains('Play Again').click();
+
+    /*  `Play Again` button should not exist */
+    cy.contains('Play Again').should('not.exist');
+
+    /* `Shuffle` and `Flip Cards` buttons should have style display as 'block' */
+    cy.get('#shuffle').should('have.css', 'display', 'block');
+    cy.get('#flip').should('have.css', 'display', 'block');
+
+    /* `cards-wrapper` should not have class hidden */
+    cy.get('.cards-wrapper').should('not.have.class', 'hidden');
+
+    /* The cards are sorted and grouped by suit (hearts, spades, diamonds, clubs) */
+    cy.get('.card').then((cards) => {
+      const allCardClasses = [...cards].map((card) => card.classList[1]);
+      expect(allCardClasses).to.deep.equal(sortedCardsClasses);
+    });
+
+    /* `selected-cards` should be empty (length of zero) */
+    cy.get('.selected-cards').children().should('have.length', 0);
   });
 });
