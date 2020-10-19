@@ -5,39 +5,6 @@ let cards = [];
 const suits = ['hearts', 'spades', 'diamonds', 'clubs'];
 let selectedCard = {};
 
-function magicTrick() {
-  //   // Identify 3 cards with same data value as selected card
-  const selectedValue = selectedCard.getAttribute('data-value');
-  const newDeck = [...cardsWrapper.children];
-  const matchingCards = [];
-
-  newDeck.forEach((card) => {
-    if (card.getAttribute('data-value') === selectedValue) {
-      matchingCards.push(card);
-    };
-  });
-
-  matchingCards.forEach((card) => {
-    const newPositionFromLeft = (matchingCards.indexOf(card) + 1) * 33
-    card.style.left = `${newPositionFromLeft}px`;
-  });
-
-  const dropzone = document.querySelector(('#selected-cards'));
-  matchingCards.forEach((card) => {
-    dropzone.appendChild(card);
-  });
-
-  document.getElementById('shuffle').style.display = 'none';
-  document.getElementById('flip').style.display = 'none';
-  document.getElementById('magic').remove();
-  const playAgainElement = document.createElement('button');
-  playAgainElement.innerHTML = 'Play Again';
-  playAgainElement.setAttribute('id', 'play-again');
-  playAgainElement.classList.add('btn', 'btn-lg', 'btn-secondary');
-  btnWrapper.append(playAgainElement);
-  document.getElementById('play-again').addEventListener('click', playAgain);
-}
-
 function createCards() {
   // Create an array with objects containing the value and the suit of each card
   suits.forEach((suit) => {
@@ -71,13 +38,6 @@ function createButtons() {
   document.getElementById('flip').style.display = 'block';
 }
 
-// Function to start the game by clearing the wrapper, creating
-// and appending the buttons and all the cards to the DOM
-function startGame() {
-  createCards();
-  createButtons();
-}
-
 function playAgain() {
   cardsWrapper.innerHTML = '';
   selectedCardsWrapper.innerHTML = '';
@@ -87,7 +47,46 @@ function playAgain() {
   document.getElementById('play-again').remove();
   document.getElementById('shuffle').style.display = 'block';
   document.getElementById('flip').style.display = 'block';
+}
 
+function magicTrick() {
+  //   // Identify 3 cards with same data value as selected card
+  const selectedValue = selectedCard.getAttribute('data-value');
+  const newDeck = [...cardsWrapper.children];
+  const matchingCards = [];
+
+  newDeck.forEach((card) => {
+    if (card.getAttribute('data-value') === selectedValue) {
+      matchingCards.push(card);
+    }
+  });
+
+  matchingCards.forEach((card) => {
+    const newPositionFromLeft = (matchingCards.indexOf(card) + 1) * 33;
+    card.style.left = `${newPositionFromLeft}px`;
+  });
+
+  const dropzone = document.querySelector(('#selected-cards'));
+  matchingCards.forEach((card) => {
+    dropzone.appendChild(card);
+  });
+
+  document.getElementById('shuffle').style.display = 'none';
+  document.getElementById('flip').style.display = 'none';
+  document.getElementById('magic').remove();
+  const playAgainElement = document.createElement('button');
+  playAgainElement.innerHTML = 'Play Again';
+  playAgainElement.setAttribute('id', 'play-again');
+  playAgainElement.classList.add('btn', 'btn-lg', 'btn-secondary');
+  btnWrapper.append(playAgainElement);
+  document.getElementById('play-again').addEventListener('click', playAgain);
+}
+
+// Function to start the game by clearing the wrapper, creating
+// and appending the buttons and all the cards to the DOM
+function startGame() {
+  createCards();
+  createButtons();
 }
 
 function shuffleCards() {
@@ -138,7 +137,6 @@ function onClick(id) {
     card.removeAttribute('draggable');
     card.removeAttribute('onclick');
   });
-
   document.getElementById('magic').addEventListener('click', magicTrick);
 }
 
@@ -183,7 +181,6 @@ function onDrop(event) {
     card.removeAttribute('draggable');
     card.removeAttribute('onclick');
   });
-
   document.getElementById('magic').addEventListener('click', magicTrick);
 }
 
