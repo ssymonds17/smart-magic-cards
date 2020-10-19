@@ -5,18 +5,7 @@ let cards = [];
 const suits = ['hearts', 'spades', 'diamonds', 'clubs'];
 let selectedCard = {};
 
-function createCards() {
-  // For each suit create a cardObject 1-13
-  suits.forEach((suit) => {
-    for (let i = 1; i <= 13; i += 1) {
-      const cardObject = {
-        value: i,
-        suit,
-      };
-      cards.push(cardObject);
-    }
-  });
-
+function displayCards() {
   // For each dataObject, create a new card and append it to the DOM
   cards.forEach((card, i) => {
     // Position must be set to 33 for optimum visibility
@@ -30,6 +19,21 @@ function createCards() {
     cardElement.style.left = `${positionFromLeft}px`;
     cardsWrapper.append(cardElement);
   });
+}
+
+function createCards() {
+  // For each suit create a cardObject 1-13
+  suits.forEach((suit) => {
+    for (let i = 1; i <= 13; i += 1) {
+      const cardObject = {
+        value: i,
+        suit,
+      };
+      cards.push(cardObject);
+    }
+  });
+
+  displayCards();
 }
 
 // Function to clear out the initial button and create new buttons to play the game.
@@ -101,18 +105,7 @@ function shuffleCards() {
 
   document.getElementById('cards-wrapper').innerHTML = '';
 
-  // For each dataObject, create a new card and append it to the DOM
-  cards.forEach((card, i) => {
-    const positionFromLeft = i * 33;
-    const cardElement = document.createElement('div');
-    cardElement.setAttribute('data-value', card.value);
-    cardElement.setAttribute('id', `${card.suit}-${card.value}`);
-    cardElement.setAttribute('draggable', 'true');
-    cardElement.setAttribute('onclick', `onClick('${card.suit}-${card.value}')`);
-    cardElement.classList.add('card', `${card.suit}-${card.value}`);
-    cardElement.style.left = `${positionFromLeft}px`;
-    cardsWrapper.append(cardElement);
-  });
+  displayCards();
 }
 
 function flipCardsToggle() {
